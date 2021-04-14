@@ -1,3 +1,4 @@
+
 <mat-toolbar>
   <button mat-icon-button class="example-icon" aria-label="Menu">
     <mat-icon (click)="drawer.toggle()">menu</mat-icon>
@@ -6,18 +7,18 @@
     Projet intégrateur
   </label>
   <label class="spacer"></label>
-  <mat-icon [matMenuTriggerFor]="menuConnect">
+  <mat-icon [matMenuTriggerFor]="menuConnect"   >
     account_circle
   </mat-icon>
-  <mat-menu #menuConnect="matMenu">
-    <button mat-menu-item>
-      <img [src]="dataIconGoogle" width="24" height="24"/>
+  <mat-menu #menuConnect="matMenu"  >
+    <button mat-menu-item  (click)="login()" [matMenuTriggerFor]="menuDisconnect"    >
+      <img [src]="dataIconGoogle" width="24" height="24"  />
       &nbsp;
       <span>Compte Google</span>
     </button>
   </mat-menu>
-  <mat-menu #menuDisconnect="matMenu">
-    <button mat-menu-item>
+  <mat-menu #menuDisconnect="matMenu"  >
+    <button mat-menu-item  (click)="logout()">
       <mat-icon>logout</mat-icon>
       <span>Déconnexion</span>
     </button>
@@ -26,19 +27,25 @@
 
 <mat-drawer-container class="example-container">
   <mat-drawer #drawer [mode]="mode.value">
-    Placez votre menu ici...
+    <mat-nav-list>
+      <a mat-list-item routerLink="/home" > home</a>
+      <a mat-list-item routerLink="/visites">visites</a>
+
+    </mat-nav-list>
+
   </mat-drawer>
-  <mat-drawer-content>
+  <mat-drawer-content >
     <mat-form-field>
       <mat-label>Sidenav mode</mat-label>
       <mat-select #mode value="push">
-        <mat-option value="side">Side</mat-option>
+        <mat-option value="side" on>Side</mat-option>
         <mat-option value="over">Over</mat-option>
         <mat-option value="push">Push</mat-option>
       </mat-select>
     </mat-form-field>
 
     <yaga-map [lng]="5.724524" [lat]="45.188529" [zoom]="12">
+
       <yaga-tile-layer [(url)]="tileLayerUrl"></yaga-tile-layer>
       <yaga-marker  [lng] = "5.724524"
                     [lat] = "45.188529"
@@ -49,6 +56,7 @@
       </yaga-marker>
 
     </yaga-map>
-
+    <app-chamis></app-chamis>
   </mat-drawer-content>
 </mat-drawer-container>
+<router-outlet></router-outlet>

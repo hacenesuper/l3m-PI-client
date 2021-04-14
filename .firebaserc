@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "cyberchamis-40b04": {
+      "hosting": {
+        "amorce-client": [
+          "cyberchamis-40b04"
+        ]
+      }
+    }
+  }
+}

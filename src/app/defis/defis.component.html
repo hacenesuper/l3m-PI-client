@@ -1,0 +1,20 @@
+<h1>Defi</h1>
+<table>
+  <thead>
+    <tr>
+      <th>ID_defi</th>
+      <th>Titre</th>
+      <th>auteur</th>
+      <th>Date</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let a of defi">
+      <td><span> {{a.iddefi}} </span></td>
+      <td><span>{{a.titre}}</span></td>
+      <td><span>{{a.auteur}}</span></td>
+      <td><span>{{a.date}}</span></td>
+    </tr>
+  </tbody>
+</table>
