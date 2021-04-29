@@ -1,0 +1,65 @@
+<mat-drawer-container class="example-container">
+
+  <mat-drawer-content >
+
+    <yaga-map [lng]="5.724524" [lat]="45.188529" [zoom]="12">
+      <yaga-polyline
+      *ngFor   = "let ligne of lignes | async"
+      [geoJSON] = "ligne"
+      [color]   = " 'rgb(' + ligne.properties.COULEUR + ')' "
+    >
+    </yaga-polyline>
+
+      <yaga-tile-layer [(url)]="tileLayerUrl"></yaga-tile-layer>
+      <yaga-marker  [lng] = "5.724524"
+                    [lat] = "45.188529"
+                    [display] = "true"
+                    [opacity] = "1"
+                    >
+        <yaga-icon [iconUrl]="iconMarker"></yaga-icon></yaga-marker>
+
+        <yaga-marker *ngFor   = "let arret of defiarret"
+                       [lng] = "arret.geometry.coordinates[0]"
+                    [lat] = "arret.geometry.coordinates[1]"
+                    [display] = "true"
+                    [opacity] = "1"
+                    >
+        <yaga-icon [iconUrl]="icondefi"  [iconSize]="iconsize"></yaga-icon>
+
+          <yaga-popup >
+            <div>
+            <table border='2'>
+              <thead>
+                <tr>
+
+                  <th>Titre</th>
+                  <th>auteur</th>
+                  <th>motclé</th>
+                  <th>jouer</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr >
+
+                  <td>{{arret.defi.titre}}</td>
+                     <td> {{arret.defi.auteur}} </td>
+                  <td>{{arret.defi.motscles}}</td>
+
+                  <td><button (click)="emite(arret.defi.id)" > play </button></td>
+
+                </tr>
+              </tbody>
+            </table>
+          </div>
+         </yaga-popup>
+
+      </yaga-marker>
+
+
+    </yaga-map>
+
+
+  </mat-drawer-content>
+</mat-drawer-container>
+

@@ -1,12 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-export class Defi {
-  constructor(public iddefi:string,
-    public titre :string ,
-    public auteur:string,
-    public date:string)
-    {}
-}
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import{Defi} from '../modele/defi'
+
 @Component({
   selector: 'app-defis',
   templateUrl: './defis.component.html',
@@ -14,17 +9,28 @@ export class Defi {
 })
 
 export class DefisComponent implements OnInit {
-defi:Defi[]=[];
+  @Output() setdefiID: EventEmitter<string> = new EventEmitter();
+  @Input() iddefi: string | undefined;
+
+
+defis:Defi[]=[];
   constructor(private httpclient :HttpClient) { }
 
   ngOnInit() {
     this.getdefi();
   }
   getdefi(){
-    this.httpclient.get<any>(' http://localhost:5000/api/users/' ).subscribe(
+    this.httpclient.get<any>("http://localhost:5000/api/defis/").subscribe(
       response => {
-        this.defi=response;
+        console.log(response)
+        this.defis=response;
+        console.log(this.defis[0])
       }
     );
   }
+  emite(id:string) {
+    console.log(id)
+    this.setdefiID.emit(id);
+  }
+
 }

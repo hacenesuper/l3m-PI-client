@@ -15,11 +15,12 @@ import { AuthInfo ,User} from './utilisateur';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
+  Ligne : any ;
   dataIconGoogle = 'assets/images/iconGoogle.png';
   iconMarker =
     'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Map_marker.svg/585px-Map_marker.svg.png';
   tileLayerUrl = OSM_TILE_LAYER_URL;
-
+  Color :string="#ff"
   age:number=20;
   @Output() setLogin: EventEmitter<AuthInfo> = new EventEmitter();
   constructor(public auth: AngularFireAuth, private HttpClient:HttpClient )
@@ -40,6 +41,7 @@ export class AppComponent {
       }
 
     });
+    //this.getLigneTag();
   }
 
   POST(
@@ -74,4 +76,6 @@ export class AppComponent {
     this.auth.signOut();
 
   }
+
+
 }

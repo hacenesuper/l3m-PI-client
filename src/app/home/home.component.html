@@ -1,0 +1,43 @@
+  <app-login
+    (setLogin)="setConnexion($event)"
+
+    *ngIf="!authInfo.isLogged"
+  ></app-login>
+  <app-nav *ngIf="authInfo.isLogged"
+  (setStep)="setStep($event)"></app-nav>
+
+  <app-chamis *ngIf="step === 2"></app-chamis>
+  <div  *ngIf="authInfo.isLogged && step === 1" class="body" >
+
+
+<app-defis *ngIf="authInfo.isLogged && step === 1"
+(setdefiID)="setiddefi($event)"
+
+[iddefi]="iddefi"
+></app-defis>
+   <div style="width: 50%;">
+     <app-carte
+     (setdefiID)="setiddefi($event)"
+  [defis]="defi"
+  [arrets]="arret"
+  *ngIf="authInfo.isLogged && step === 1 "  > </app-carte>
+</div>
+<div style="position: absolute;
+top: 200px;
+left: 760px;
+width: 450px;
+text-align: center;
+">
+  <app-defi-detail-play *ngIf="authInfo.isLogged  && detail===true" [(defiId)]="iddefi" (Page)="setdetail($event)" (defiIdChange)="setidittodesplay($event)"
+
+  >
+  </app-defi-detail-play>
+  </div>
+
+</div>
+
+<app-edit-defi *ngIf="authInfo.isLogged && step === 3" [defiId]="iddefi"   >  </app-edit-defi>
+
+<app-profil *ngIf="authInfo.isLogged && step === 5" [login]="authInfo.userName">
+</app-profil>
+<app-creationdefi  *ngIf="step === 4" (setStep)="setStep($event)" ></app-creationdefi>

@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 export class Chamis {
-  constructor(public id:string,
-    public age :string )
+  constructor(public login:string,
+    public age :string)
     {}
 }
 @Component({
@@ -22,11 +22,12 @@ export class ChamisComponent implements OnInit {
     this.getchamis();
   }
 getchamis(){
-  this.httpclient.get<Chamis[]>("/assets/testserveur.json" ).subscribe(
+  this.httpclient.get<Chamis[]>("http://localhost:5000/api/users/" ).subscribe(
     response => {
       this.chamis=response;
 
-      console.log(this.chamis[1].age)
+      console.log(response)
+      console.log(this.chamis)
     }
   );
 

@@ -1,0 +1,227 @@
+<div class="container bootstrap snippets bootdey">
+  <div class="row ng-scope">
+      <div class="col-md-4">
+
+
+      </div>
+      <div style="position: absolute;left: 400px;" class="col-md-8">
+          <div class="panel panel-default">
+              <div class="panel-body">
+                  <div class="h4 text-center">Ajouter un défi </div>
+                  <div class="row pv-lg">
+                      <div class="col-lg-2"></div>
+                      <div class="col-lg-8">
+                          <form style="background-color: rgb(243, 172, 105);" #myform="ngForm"
+                              (ngSubmit)="this.ajouterDefi()" class="form-control " novalidate>
+
+
+
+                              <div class="form-group">
+                                  <label class="col-sm-2 control-label" for="inputContact1">Titre</label>
+                                  <div class="col-sm-10">
+                                      <input matInput required [(ngModel)]="this.deficree.titre" name="Titre"
+                                          class="form-control" id="inputContact1" type="text">
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <label class="col-sm-2 control-label" for="inputContact2">Type</label>
+                                  <div class="col-sm-10">
+                                      <input required [(ngModel)]="this.deficree.type" name="Type"
+                                          class="form-control" id="inputContact2">
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <label class="col-sm-2 control-label" for="inputContact3">Auteur</label>
+                                  <div class="col-sm-10">
+                                      <input required [(ngModel)]="this.deficree.auteur" name="Auteur"
+                                          class="form-control" id="inputContact3" type="text">
+                                  </div>
+                              </div>
+
+
+
+
+                              <div class="form-group">
+                                  <p> Mots clés</p>
+                                  <div class="col-sm-10">
+                                      <input required [(ngModel)]="this.deficree.motscles" name="Mots"
+                                          class="form-control" id="inputContact8" type="text">
+
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <label class="col-sm-2 control-label" for="inputContact8">Points</label>
+                                  <div class="col-sm-10">
+                                      <input required [(ngModel)]="this.deficree.points" name="Points"
+                                          class="form-control" id="inputContact8" type="text">
+                                  </div>
+                              </div>
+
+
+                              <div class="form-group" style="position: absolute;left: 250px;margin-top: -100px;">
+                                  <label for="pet-select">Arret de transport</label>
+
+
+                                  <select [(ngModel)]="this.deficree.arret " name="Arret">
+
+                                      <option required  *ngFor="let ar of this.arrets" [ngValue]="ar">{{ar.Arret}}</option>
+                                  </select>
+                              </div>
+
+                              <div class="form-group">
+                                  <label class="col-sm-2 control-label" for="inputContact8">Durée</label>
+                                  <div class="col-sm-10">
+                                      <input required [(ngModel)]="this.deficree.duree" name="Duree"
+                                          class="form-control" id="inputContact8" type="text">
+                                  </div>
+                              </div>
+
+
+
+
+                              <div class="form-group">
+                                  <label class="col-sm-2 control-label" for="inputContact8">Epilogue</label>
+                                  <div class="col-sm-10">
+                                      <input required [(ngModel)]="this.deficree.epilogue" name="Epilogue"
+                                          class="form-control" id="inputContact8" type="text">
+                                  </div>
+                              </div>
+
+
+                              <div class="form-group">
+                                  <label class="col-sm-2 control-label" for="inputContact8">Description</label>
+                                  <div class="col-sm-10">
+                                      <input required [(ngModel)]="this.deficree.description" name="description"
+                                          class="form-control" id="inputContact8" type="text">
+                                  </div>
+                              </div>
+
+
+                              <div class="form-group">
+                                  <label class="col-sm-2 control-label" for="inputContact8">commentaires</label>
+                                  <div class="col-sm-10">
+                                      <input required [(ngModel)]="this.deficree.commentaires" name="commentaires"
+                                          class="form-control" id="inputContact8" type="text">
+                                  </div>
+                              </div>
+
+
+                              <div class="form-group">
+                                  <label class="col-sm-2 control-label" for="inputContact8">Prologue</label>
+                                  <div class="col-sm-10">
+                                      <input required [(ngModel)]="this.deficree.prologue" name="Prologue"
+                                          class="form-control" id="inputContact8" type="text">
+                                      <p>myprolog{{this.deficree.prologue}}</p>
+                                  </div>
+                              </div>
+
+
+
+
+                              <div class="form-group">
+                                  <label for="inputContact8">Combiens de question
+                                  voulez-vous affecter à ce défi</label>
+                                  <div class="col-sm-10">
+                                      <input required (change)="taillequestion(nbrQ.value)" #nbrQ id="myinput" type="number"
+                                          name="rangeInput" min="1" max="4">
+
+                                  </div>
+                              </div>
+
+                              <!---
+                              <div>
+                                  <div *ngFor="let q of this.questions;let n = index;trackBy:trackByIndex;">
+                                    <input [(ngModel)]="q.description"  name="q.description{{n}}">
+                                    <input [(ngModel)]="q.secrets"  name="q.secrets{{n}}" >
+                                    <input [(ngModel)]="q.points"  name="q.points{{n}}">
+
+                                  </div>
+                                </div>
+
+                              -->
+
+
+                              <div *ngFor="let q of this.questions ;let  j =index;trackBy:trackByIndex ;" class="form-group">
+
+                                  <div class="form-group">
+
+                                      <label class="col-sm-2 control-label"
+                                          for="inputContact8">Question{{j+1}}</label>
+
+                                  </div>
+
+                                  <div>
+                                      <label class="col-sm-2 control-label" for="inputContact8">Description</label>
+
+                                      <div class="col-sm-10">
+                                          <input [(ngModel)]="q.description"  required name="{{'qa'+j}}"
+                                              class="form-control" type="text">
+                                      </div>
+                                  </div>
+
+
+                                  <div>
+                                      <label class="col-sm-2 control-label" for="inputContact8">Secrets</label>
+
+                                      <div class="col-sm-10">
+                                          <input required [(ngModel)]="q.secrets" name="{{'qb'+j}}"
+                                              class="form-control" type="text">
+                                      </div>
+                                  </div>
+
+
+
+
+                              </div>
+
+                              <div class="form-group">
+                                  <label  for="inputContact8">Combiens d'indices
+                                      voulez-vous affecter à ce défi</label>
+                                  <div class="col-sm-10">
+                                      <input required (change)="this.tailleindice(nbrI.value)" #nbrI id="myinputIndice"
+                                          type="number" name="rangeInput2" min="1" max="4">
+
+                                  </div>
+                              </div>
+
+                              <div *ngFor="let i of this.indices ; index as x" class="form-group">
+                                  <label class="col-sm-2 control-label" for="inputContact8">Indice{{x+1}}</label>
+
+                                  <div class="form-group">
+                                      <label class="col-sm-2 control-label" for="inputContact8">Description</label>
+                                      <div class="col-sm-10">
+                                          <input required [(ngModel)]="i.description" name="{{'indiceDescription'+x}}" class="form-control"
+                                              type="text">
+                                      </div>
+                                  </div>
+
+                                  <div class="form-group">
+                                      <label class="col-sm-2 control-label" for="inputContact8">Points</label>
+
+                                      <div class="col-sm-10">
+                                          <input required [(ngModel)]="i.points" name="{{'indicePoint'+x}}" class="form-control"
+                                              type="text">
+                                      </div>
+                                  </div>
+
+                              </div>
+
+
+                              <div class="form-group">
+                                  <div class="col-sm-offset-2 col-sm-10">
+                                      <button [disabled]="myform.untouched" type="submit" style="color: rgb(20, 22, 20);"
+                                          class="btn btn-info">Ajouter</button>
+                                      <div style="position: absolute;left: 550px;top: 5px;"> <button
+                                              (click)="setsetStep(1)" style="color: rgb(20, 22, 20);"
+                                              class="btn btn-info">Annuler</button></div>
+
+                                  </div>
+                              </div>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

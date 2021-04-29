@@ -1,0 +1,33 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<div class="container" >
+    <div class="row" style="height:500px;max-width: 100%; border: 2px solid blue; overflow: scroll; text-align: center;">
+        <div    >
+
+
+                <a (click)="setPage()" href="#" class="btn btn-info btn-lg">
+                  <span class="glyphicon glyphicon-arrow-left"></span>fermer
+                </a>
+            <div class="project-info-box mt-0">
+                <h5>Description</h5>
+                <p class="mb-0">{{this.defi.description}}</p>
+            </div><!-- / project-info-box -->
+
+            <div class="project-info-box">
+                <p><b>Identifiant:</b> {{this.defi.id}}</p>
+
+                <p><b>Titre:</b>{{this.defi.titre}}</p>
+                <p><b>Type:</b>{{this.defi.type}}</p>
+                <p><b>Auteur:</b>{{this.defi.auteur}}</p>
+                <p><b> Mots clés:</b>{{this.defi.motscles}}</p>
+                <p><b> Points</b> {{this.defi.points}}</p>
+                <p><b> Durée :</b> {{this.defi.duree}}</p>
+
+
+            </div><!-- / project-info-box -->
+
+               <div><button (click)="setPage2(this.defi.id)"> editer</button> <button> voire visite</button> <button> visiter </button></div>
+        </div><!-- / column -->
+
+
+    </div>
+</div>

@@ -22,13 +22,30 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatListModule } from '@angular/material/list';
 import { VisitesComponent } from './visites/visites.component';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { FormsModule } from '@angular/forms';
+import { NavComponent } from './nav/nav.component';
+import { CarteComponent } from './carte/carte.component';
+import { DefiDetailPlayComponent } from './defi-detail-play/defi-detail-play.component';
+import { ProfilComponent } from './profil/profil.component';
+import { CreationdefiComponent } from './creation-defi/creationdefi.component';
+import { EditDefiComponent } from './edit-defi/edit-defi.component';
 ;
 @NgModule({
   declarations: [	
     AppComponent,
       DefisComponent,
       ChamisComponent,
-      VisitesComponent
+      VisitesComponent,
+      HomeComponent,
+      LoginComponent,
+      NavComponent,
+      CarteComponent,
+      DefiDetailPlayComponent,
+      ProfilComponent,
+      CreationdefiComponent,
+      EditDefiComponent
    ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
@@ -46,7 +63,9 @@ import { VisitesComponent } from './visites/visites.component';
     YagaModule,
     HttpClientModule,
     LayoutModule,
+    FormsModule,
     MatListModule,
+
 
   ],
   providers: [HttpClient],

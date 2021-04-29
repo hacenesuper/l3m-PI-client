@@ -1,0 +1,24 @@
+:host {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+
+
+  mat-drawer-container {
+    flex: 1 1;
+    > mat-drawer {
+      border-right: solid grey 3px;
+    }
+  }
+
+
+  yaga-map {
+    display: flex;
+    height: 480px;
+  }
+  yaga-icon{
+    display: flex;
+    width: 200px;
+  }
+
+}

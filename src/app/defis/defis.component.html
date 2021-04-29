@@ -1,20 +1,34 @@
-<h1>Defi</h1>
-<table>
+
+<label style="border-radius: 10%;">
+  <input>
+</label>
+<label>
+  <input>
+</label>
+<label>
+  <input>
+</label>
+<button> search</button>
+<div style="max-height:200px;max-width: 50%; border: 2px solid blue; overflow: scroll;">
+<table >
   <thead>
     <tr>
-      <th>ID_defi</th>
+
       <th>Titre</th>
       <th>auteur</th>
       <th>Date</th>
-
+      <th>jouer</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let a of defi">
-      <td><span> {{a.iddefi}} </span></td>
-      <td><span>{{a.titre}}</span></td>
-      <td><span>{{a.auteur}}</span></td>
-      <td><span>{{a.date}}</span></td>
+    <tr *ngFor="let a of defis">
+
+      <td>{{a.titre}}</td>
+         <td> {{a.auteur}} </td>
+      <td>{{a.datedecreation}}</td>
+
+      <td><button (click)="emite(a.id)"> play </button></td>
     </tr>
   </tbody>
 </table>
+</div>

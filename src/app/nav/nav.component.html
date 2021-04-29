@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-md navbar-dark top" id="banner">
+  <div class="container">
+    <!-- Brand -->
+    <a class="navbar-brand" (click)="goToStep(1)" href="#"><span>Chamis</span>familly</a>
+
+    <!-- Toggler/collapsibe Button -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#collapsibleNavbar"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav ml-auto">
+
+        <li class="nav-item">
+          <a class="nav-link" (click)="goToStep(2)">la communauté</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" (click)="goToStep(4)">créer des defis</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="goToStep(5)">Profil</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="goToStep(6)" >Deconnecter</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
