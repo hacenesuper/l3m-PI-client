@@ -1,4 +1,3 @@
-
 <label style="border-radius: 10%;">
   <input>
 </label>
@@ -10,25 +9,27 @@
 </label>
 <button> search</button>
 <div style="max-height:200px;max-width: 50%; border: 2px solid blue; overflow: scroll;">
-<table >
-  <thead>
-    <tr>
+  <table>
+    <thead>
+      <tr>
 
-      <th>Titre</th>
-      <th>auteur</th>
-      <th>Date</th>
-      <th>jouer</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let a of defis">
+        <th>Titre</th>
+        <th>auteur</th>
+        <th>Date</th>
+        <th>jouer</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let a of this.defis|async">
 
-      <td>{{a.titre}}</td>
-         <td> {{a.auteur}} </td>
-      <td>{{a.datedecreation}}</td>
+        <td>{{a.titre}}</td>
+        <td> {{a.auteur}} </td>
+        <td>{{a.datedecreation}}</td>
 
-      <td><button (click)="emite(a.id)"> play </button></td>
-    </tr>
-  </tbody>
-</table>
+        <td><button (click)="emite(a.id)"> play </button></td>
+      </tr>
+    </tbody>
+  </table>
+
+
 </div>

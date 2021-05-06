@@ -1,6 +1,6 @@
 export interface Arret {
-  Arret : string
-  Codearret : string
+  arret : string
+  codearret : string
   streetmap :string
 
 }

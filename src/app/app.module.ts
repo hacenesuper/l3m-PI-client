@@ -31,6 +31,13 @@ import { DefiDetailPlayComponent } from './defi-detail-play/defi-detail-play.com
 import { ProfilComponent } from './profil/profil.component';
 import { CreationdefiComponent } from './creation-defi/creationdefi.component';
 import { EditDefiComponent } from './edit-defi/edit-defi.component';
+import { AssistantVisitComponent } from './assistant-visit/assistant-visit.component';
+import { CompteurComponent } from './compteur/compteur.component';
+import { TestImageuploadComponent } from './test-imageupload/test-imageupload.component';
+import {
+  AngularFireStorageModule, BUCKET,
+  
+} from "@angular/fire/storage";
 ;
 @NgModule({
   declarations: [	
@@ -45,7 +52,10 @@ import { EditDefiComponent } from './edit-defi/edit-defi.component';
       DefiDetailPlayComponent,
       ProfilComponent,
       CreationdefiComponent,
-      EditDefiComponent
+      EditDefiComponent,
+      AssistantVisitComponent,
+      CompteurComponent,
+      TestImageuploadComponent
    ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
@@ -65,10 +75,11 @@ import { EditDefiComponent } from './edit-defi/edit-defi.component';
     LayoutModule,
     FormsModule,
     MatListModule,
+    AngularFireStorageModule,
 
 
   ],
-  providers: [HttpClient],
+  providers: [HttpClient], 
   bootstrap: [AppComponent]
 })
 export class AppModule { }

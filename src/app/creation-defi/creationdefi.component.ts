@@ -1,9 +1,12 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { empty } from 'rxjs';
-import { Arret } from '../modele/Arret';
+import { empty, Observable } from 'rxjs';
+import { MaterielService } from '../materiel.service';
+import { Arret, FeatureArret } from '../modele/Arret';
 import { Defi } from '../modele/defi';
 import { Indice } from '../modele/Indice';
+import { Materiel } from '../modele/Materiel';
 import { Question } from '../modele/Question';
+import { Urllien } from '../modele/Url';
 import { ArretService } from '../service/arret.service';
 import { DefisService } from '../service/Defis.service';
 import { IndiceService } from '../service/indice.service';
@@ -22,7 +25,7 @@ export class CreationdefiComponent implements OnInit {
     datedecreation: new Date(),
 
     //dateNull??
-    datedemodification:new Date() ,
+    datedemodification: new Date(),
     description: "",
 
     type: "",
@@ -41,12 +44,20 @@ export class CreationdefiComponent implements OnInit {
   public arrets: Arret[] = [];
 
 
-  public questions: Question[]=[];
+  public questions: Question[] = [];
+  public materiels: Materiel[] = [];
+  public urls:Urllien[]=[];
+
   //public question!: Question;
 
 
   public indices: Indice[] = [];
   public indice!: Indice;
+  fichierUrl!: Observable<string>;
+  verifieMateriel:string="";
+  material!:Materiel;
+  featuresarret!:Observable<FeatureArret[]>;
+  descriptionM:string="";
 
 
 
@@ -55,12 +66,14 @@ export class CreationdefiComponent implements OnInit {
 
 
 
-  constructor(private defiservice: DefisService, private arretservice: ArretService, private questionservice: QuestionService, private indiceservice: IndiceService) { }
+
+  constructor(private defiservice: DefisService, private arretservice: ArretService, private questionservice: QuestionService, private indiceservice: IndiceService,private materialservice:MaterielService) { }
 
   ngOnInit(): void {
-/*
-    this.arretservice.getArrets().subscribe((data1 => this.arrets = data1));
-    this.defiservice.getDefis().subscribe((data2 => this.defisListe = data2));*/
+    /*
+        this.arretservice.getArrets().subscribe((data1 => this.arrets = data1));
+        this.defiservice.getDefis().subscribe((data2 => this.defisListe = data2));*/
+        this.featuresarret=this.arretservice.toutLesarret();
 
   }
 
@@ -68,33 +81,47 @@ export class CreationdefiComponent implements OnInit {
 
 
   ajouterDefi() {
-    this.deficree.id=this.genereNId();
-    let pointTotal=0;
+    this.deficree.id = this.genereNId();
+    let pointTotal = 0;
 
-   this.questions.forEach((q,i)=>{
-    q.id=this.deficree.id;
-    q.label=i+1;
-    pointTotal=pointTotal+q.points;
-    this.questionservice.creationQuestion(q).subscribe();
-  });
+    this.questions.forEach((q, i) => {
+      q.id = this.deficree.id;
+      q.label = i + 1;
+      pointTotal = pointTotal + q.points;
+      this.questionservice.creationQuestion(q).subscribe();
+    });
 
 
-  this.indices.forEach((n,v)=>{
-    n.id=this.deficree.id;
-    n.label=v+1;
-this.indiceservice.creationIndice(n).subscribe();
-});
+    this.indices.forEach((n, v) => {
+      n.id = this.deficree.id;
+      n.label = v + 1;
+      this.indiceservice.creationIndice(n).subscribe();
+    });
 
-this.deficree.points=pointTotal;
-this.deficree.datedecreation=new Date();
-//Arret et code
-this.arrets.forEach((a)=>{
-  if (a.Arret=this.deficree.arret){
-    this.deficree.codearret=a.Codearret;
-  };
-});
+    this.deficree.points = pointTotal;
+    this.deficree.datedecreation = new Date();
+    //Arret et code
+    this.arrets.forEach((a) => {
+      if (a.arret = this.deficree.arret) {
+        this.deficree.codearret = a.codearret;
+      };
+    });
+    //mettre le materiel et envoyer au serveur
+ 
+    this.materiels.forEach((i,v)=>{
+i.id=this.deficree.id;
+i.label=v+1;
+i.ressource=this.urls[v].url;
+i.type=i.ressource=this.urls[v].type;
 
-this.defiservice.creationDefi(this.deficree).subscribe(x=>console.log("le defi crée",x));
+
+    });
+    //création de materiels
+    this.materiels.forEach((i,v)=>{this.materialservice.creationMateriel(i).subscribe});
+    //this.fichierUrl=this.materialservice.uploadFichier();
+/*tritement*/
+//creation défi
+    this.defiservice.creationDefi(this.deficree).subscribe(x => console.log("le defi crée", x));
 
 
 
@@ -107,19 +134,35 @@ this.defiservice.creationDefi(this.deficree).subscribe(x=>console.log("le defi c
 
     this.questions = [];
 
-   for (let i = 0; i <Number(n) ; i++) {
-      this.questions[i]={id:'',label:9,description: '',secrets:'',points:0};
-      console.log("Questions",this.questions);
+    for (let i = 0; i < Number(n); i++) {
+      this.questions[i] = { id: '', label: 9, description: '', secrets: '', points: 0 };
+      console.log("Questions", this.questions);
+
 
     }
   }
+
+
+  tailleMateriels(n: string) {
+
+    this.materiels= [];
+    this.urls= [];
+
+
+    for (let i = 0; i < Number(n); i++) {
+      this.materiels[i] = { id: '', label: 0, description: '',ressource : '', type: "" };
+      console.log("Materiels", this.materiels);
+
+    }
+  }
+
 
   tailleindice(n: string) {
 
     this.indices = [];
     for (let i = 0; i < (Number(n)); i++) {
-      this.indices[i]={id:'',label:9,description: '',points:0};
-      console.log("indice",this.indices);
+      this.indices[i] = { id: '', label: 9, description: '', points: 0 };
+      console.log("indice", this.indices);
 
 
     }
@@ -167,9 +210,52 @@ this.defiservice.creationDefi(this.deficree).subscribe(x=>console.log("le defi c
   }
 
 
+  trackByIndexM(index: number, material: Materiel): number {
+    return index;
+  }
 
 
   setsetStep(setStep: number) {
     this.setStep.emit(setStep);
 
-  }}
+  }
+
+
+
+
+
+
+  choisirFichier(event: any,c:number) {
+    this.verifieMateriel=event.target.files[0].type.substring(0,5)
+    if(this.verifieMateriel=="video"){
+      this.verifieMateriel="vidéo";
+    }
+    console.log(this.verifieMateriel);
+    
+  this.materialservice.choisirFichier(event).subscribe(x=> this.urls[c]={url:x,type:this.verifieMateriel});
+
+  console.log("jj",this.urls);
+
+    
+  }
+
+/*
+   uploadFichier() {
+
+this.fichierUrl=this.materialservice.uploadFichier();
+this.fichierUrl.subscribe(x=>{console.log(x);
+tritement});
+
+alert("image uploaded");
+
+  }*/
+
+  do(s:string){
+    this.deficree.arret=s;
+    console.log("arret",s);
+  }
+
+
+}
+
+

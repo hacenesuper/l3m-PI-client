@@ -1,8 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Arret } from '../modele/Arret';
+import { Observable } from 'rxjs';
+import { MaterielService } from '../materiel.service';
+import { Arret, FeatureArret } from '../modele/Arret';
 import { Defi } from '../modele/defi';
 import { Indice } from '../modele/Indice';
+import { Materiel } from '../modele/Materiel';
 import { Question } from '../modele/Question';
+import { Urllien } from '../modele/Url';
 import { ArretService } from '../service/arret.service';
 import { DefisService } from '../service/Defis.service';
 import { IndiceService } from '../service/indice.service';
@@ -15,7 +19,7 @@ import { QuestionService } from '../service/question.service';
 })
 export class EditDefiComponent implements OnInit {
 
- @Input() defiId: string ="D151";
+ @Input() defiId: string ="D189";
 
 
   @Input() public parentData=0;
@@ -25,14 +29,22 @@ export class EditDefiComponent implements OnInit {
 
   public defiedit!: Defi;
   public arrets:Arret[]=[];
-  public questions!:Question[];;
-  public indices!:Indice[];;
+  public questions!:Question[];
+  public indices!:Indice[];
+  materials:Materiel[]=[];
+  fichierUrl!: Observable<string>;
+  featuresarret!:Observable<FeatureArret[]>;
+  verifieMateriel:string="";
+  public urls:Urllien[]=[];
 
 
 
 
 
-  constructor(private defiservice:DefisService,private arretservice:ArretService,private questionservice: QuestionService,private indiceservice:IndiceService) {}
+
+
+
+  constructor(private defiservice:DefisService,private arretservice:ArretService,private questionservice: QuestionService,private indiceservice:IndiceService,private materialservice:MaterielService) {}
 
   ngOnInit(): void {
     this.indiceservice.getIndicesByIdDefi(this.defiId).subscribe((data3=>{this.indices=data3;
@@ -44,6 +56,9 @@ export class EditDefiComponent implements OnInit {
     this.defiservice.getDefiByIdDefi(this.defiId).subscribe((data=>{this.defiedit=data;
       console.log("le defi",this.defiedit)}));
     this.arretservice.getArrets().subscribe((data1=>this.arrets=data1));
+     this.materialservice.getMaterielByIdDefi(this.defiId).subscribe(d=>{this.materials=d});
+this.featuresarret=this.arretservice.toutLesarret();
+console.log("ur",this.materials[0].ressource);
 
 
 
@@ -65,10 +80,24 @@ this.indices.forEach((i)=>{
 //********mise à jour de code d'arret ************
 
 this.arrets.forEach((a)=>{
-  if (a.Arret=this.defiedit.arret){
-    this.defiedit.codearret=a.Codearret;
+  if (a.arret=this.defiedit.arret){
+    this.defiedit.codearret=a.codearret;
   };
 });
+
+//-----------------
+ //mettre le materiel et envoyer au serveur
+ 
+ this.materials.forEach((i,v)=>{
+  i.ressource=this.urls[v].url;
+  i.type=this.urls[v].type;
+  
+  
+      });
+      //création de materiels
+      this.materials.forEach((i,v)=>{this.materialservice.updateMateriel(i).subscribe()});
+
+
 //------------
 //associer l'Id reçu de la vu précédente
 //this.defiedit.id=this.defiId;
@@ -94,6 +123,44 @@ this.defiedit.datedemodification=new Date();
 
 this.Page.emit(page);
 
+  }
+
+  
+
+
+  choisirFichier(event: any,c:number) {
+
+    this.verifieMateriel=event.target.files[0].type.substring(0,5)
+    if(this.verifieMateriel=="video"){
+      this.verifieMateriel="vidéo";
+    }
+    console.log(this.verifieMateriel);
+    
+  this.materialservice.choisirFichier(event).subscribe(x=> {this.urls[c]={url:x,type:this.verifieMateriel};
+  this.materials[c].ressource=x});
+  console.log("jj",this.urls);
+
+  }
+
+
+   uploadFichier() {
+
+/*this.fichierUrl=this.materialservice.uploadFichier();
+this.fichierUrl.subscribe(x=>{console.log(x);/*
+tritement*///});
+
+
+alert("image uploaded");
+
+  }
+
+  do(s:string){
+    this.defiedit.arret=s;
+    console.log("arret",s);
+  }
+
+  trackByIndexM(index: number, material: Materiel): number {
+    return index;
   }
 
 }

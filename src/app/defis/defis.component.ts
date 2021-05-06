@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Observable } from 'rxjs';
 import{Defi} from '../modele/defi'
+import { DefisService } from '../service/Defis.service';
 
 @Component({
   selector: 'app-defis',
@@ -12,14 +14,17 @@ export class DefisComponent implements OnInit {
   @Output() setdefiID: EventEmitter<string> = new EventEmitter();
   @Input() iddefi: string | undefined;
 
+defis!:Observable<Defi[]>;
 
-defis:Defi[]=[];
-  constructor(private httpclient :HttpClient) { }
+
+//defis:Defi[]=[];
+  constructor(private httpclient :HttpClient,private defiservice:DefisService) { }
 
   ngOnInit() {
-    this.getdefi();
+    this.defis=this.defiservice.getDefis();
+   // this.getdefi();
   }
-  getdefi(){
+ /* getdefi(){
     this.httpclient.get<any>("http://localhost:5000/api/defis/").subscribe(
       response => {
         console.log(response)
@@ -27,7 +32,7 @@ defis:Defi[]=[];
         console.log(this.defis[0])
       }
     );
-  }
+  }*/
   emite(id:string) {
     console.log(id)
     this.setdefiID.emit(id);

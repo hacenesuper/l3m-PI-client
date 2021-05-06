@@ -1,0 +1,33 @@
+  
+  <div>
+  <label for="pet-select">Arret de transport</label>
+
+
+  <select #v (change)="do(v.value)"   name="arret"  >
+
+   <option  *ngFor="let ar of this.arrets|async "[ngValue]="ar.arret">{{ar.arret}}</option>
+
+    </select>
+  </div>
+
+
+  <table >
+    <thead>
+      <tr>
+  
+        <th>Titre</th>
+        <th>auteur</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let a of this.defis |async ">
+  
+        <td>{{a.titre}}</td>
+           <td> {{a.auteur}} </td>
+        <td>{{a.datedecreation | date}}</td>
+  
+      </tr>
+    </tbody>
+  </table>
+  

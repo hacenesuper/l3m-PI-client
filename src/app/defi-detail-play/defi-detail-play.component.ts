@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Observable } from 'rxjs';
+import { MaterielService } from '../materiel.service';
 import { Defi } from '../modele/defi';
+import { Materiel } from '../modele/Materiel';
 import { DefisService } from '../service/Defis.service';
 
 @Component({
@@ -9,10 +12,11 @@ import { DefisService } from '../service/Defis.service';
 })
 export class DefiDetailPlayComponent implements OnInit {
 
-  @Input()defiId: string ="D151";
+  @Input()defiId: string ="D189";
  @Output() Page: EventEmitter<boolean> = new EventEmitter();
  @Output() defiIdChange: EventEmitter<string> = new EventEmitter();
  defi!:Defi;
+ materials!:Observable<Materiel[]>;
  /*public defi: Defis={
    id:"",
    titre :"",
@@ -29,7 +33,7 @@ export class DefiDetailPlayComponent implements OnInit {
    points :1,
    epilogue:"",
  commentaires:"",};*/
-   constructor(private defiserver:DefisService) { }
+   constructor(private defiserver:DefisService,private materialservice:MaterielService) { }
 
 
    ngOnInit(): void {
@@ -37,7 +41,8 @@ export class DefiDetailPlayComponent implements OnInit {
  this.defiserver.getDefiByIdDefi(this.defiId).subscribe((data=>{this.defi=data;console.log(this.defi)}
 
 
-   ))
+   ));
+   this.materials= this.materialservice.getMaterielByIdDefi(this.defiId);
 
    }
    ngOnChange(): void {

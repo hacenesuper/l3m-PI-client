@@ -5,13 +5,22 @@
 export const environment = {
   production: false,
   firebase : {
-    apiKey: "AIzaSyCtOjnxnh8-myzJ6c5CCkHJXpZuJ1mlXtg",
+  /*  apiKey: "AIzaSyCtOjnxnh8-myzJ6c5CCkHJXpZuJ1mlXtg",
     authDomain: "cyberchamis-40b04.firebaseapp.com",
     projectId: "cyberchamis-40b04",
     storageBucket: "cyberchamis-40b04.appspot.com",
     messagingSenderId: "525054961782",
     appId: "1:525054961782:web:b4ae27e6b8d8bedd7ad757",
-    measurementId: "G-SYHB3EQB2N"
+    measurementId: "G-SYHB3EQB2N",*/
+    //
+    apiKey: "AIzaSyCi9HuC1Gs390GporDqofdQ-jnnNppxg24",
+  authDomain: "frontend-3631a.firebaseapp.com",
+  projectId: "frontend-3631a",
+  storageBucket: "frontend-3631a.appspot.com",
+  messagingSenderId: "48256671595",
+  appId: "1:48256671595:web:15e5f89fd936139d06362e",
+  measurementId: "G-F93M858QVJ"
+
   }
 
 };
