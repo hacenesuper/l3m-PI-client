@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { empty, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { MaterielService } from '../materiel.service';
 import { Arret, FeatureArret } from '../modele/Arret';
 import { Defi } from '../modele/defi';
@@ -25,7 +26,6 @@ export class CreationdefiComponent implements OnInit {
     datedecreation: new Date(),
 
     //dateNull??
-    datedemodification: new Date(),
     description: "",
 
     type: "",
@@ -47,6 +47,7 @@ export class CreationdefiComponent implements OnInit {
   public questions: Question[] = [];
   public materiels: Materiel[] = [];
   public urls:Urllien[]=[];
+  codeobs!:Observable<string>;
 
   //public question!: Question;
 
@@ -82,12 +83,15 @@ export class CreationdefiComponent implements OnInit {
 
   ajouterDefi() {
     this.deficree.id = this.genereNId();
-    let pointTotal = 0;
+    let pointTotal:number = 0;
 
     this.questions.forEach((q, i) => {
       q.id = this.deficree.id;
-      q.label = i + 1;
-      pointTotal = pointTotal + q.points;
+      q.label = i + 1
+      pointTotal = +pointTotal + +q.points;
+      console.log("nbrTOTAL",pointTotal)
+
+      console.log("nbrTOTAL",pointTotal)
       this.questionservice.creationQuestion(q).subscribe();
     });
 
@@ -95,36 +99,43 @@ export class CreationdefiComponent implements OnInit {
     this.indices.forEach((n, v) => {
       n.id = this.deficree.id;
       n.label = v + 1;
+      if(n.points>(pointTotal/this.questions.length)){
+        n.points=(pointTotal/this.questions.length)-3;
+
+      }
       this.indiceservice.creationIndice(n).subscribe();
     });
 
     this.deficree.points = pointTotal;
     this.deficree.datedecreation = new Date();
+    this.deficree.duree=this.deficree.duree+"mn";
     //Arret et code
-    this.arrets.forEach((a) => {
+    /*this.arrets.forEach((a) => {
       if (a.arret = this.deficree.arret) {
         this.deficree.codearret = a.codearret;
       };
-    });
+    });*/
     //mettre le materiel et envoyer au serveur
  
     this.materiels.forEach((i,v)=>{
 i.id=this.deficree.id;
 i.label=v+1;
 i.ressource=this.urls[v].url;
-i.type=i.ressource=this.urls[v].type;
+i.type=this.urls[v].type;
 
 
     });
     //création de materiels
-    this.materiels.forEach((i,v)=>{this.materialservice.creationMateriel(i).subscribe});
+    this.materiels.forEach((i,v)=>{this.materialservice.creationMateriel(i).subscribe()});
     //this.fichierUrl=this.materialservice.uploadFichier();
 /*tritement*/
 //creation défi
+
     this.defiservice.creationDefi(this.deficree).subscribe(x => console.log("le defi crée", x));
+    console.log("defi",this.deficree)
 
 
-
+alert("le defi a bien été crée");
 
   }
 
@@ -253,6 +264,10 @@ alert("image uploaded");
   do(s:string){
     this.deficree.arret=s;
     console.log("arret",s);
+    this.featuresarret.pipe(map( d =>{ d.filter( f => f.properties.LIBELLE == s );
+    d.forEach((x)=>{if(x.properties.LIBELLE==s){
+      this.deficree.codearret=x.properties.CODE;
+    }})} )).subscribe(w=>console.log("code",w));
   }
 
 

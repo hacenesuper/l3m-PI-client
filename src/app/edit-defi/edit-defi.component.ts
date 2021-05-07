@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Observable } from 'rxjs';
+import { async, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { MaterielService } from '../materiel.service';
 import { Arret, FeatureArret } from '../modele/Arret';
 import { Defi } from '../modele/defi';
@@ -35,7 +36,7 @@ export class EditDefiComponent implements OnInit {
   fichierUrl!: Observable<string>;
   featuresarret!:Observable<FeatureArret[]>;
   verifieMateriel:string="";
-  public urls:Urllien[]=[];
+  public urls:Urllien[]=[{url:"",type:""}];
 
 
 
@@ -65,37 +66,43 @@ console.log("ur",this.materials[0].ressource);
   }
 
   editdefi(){
-
+console.log("url",this.urls);
 let pointTotal:number=0;
 this.questions.forEach((i)=>{
-pointTotal=pointTotal+i.points;
+pointTotal= +pointTotal+ +i.points;
 this.questionservice.updateQuestion(i).subscribe();
 })
 
 this.indices.forEach((i)=>{
+  if(i.points>(pointTotal/this.questions.length)){
+    i.points=(pointTotal/this.questions.length)-3;
+
+  }
   this.indiceservice.updateIndice(i).subscribe();
   })
 
    // this.parentData=0;
 //********mise à jour de code d'arret ************
 
-this.arrets.forEach((a)=>{
+/*this.arrets.forEach((a)=>{
   if (a.arret=this.defiedit.arret){
     this.defiedit.codearret=a.codearret;
   };
-});
+});*/
 
 //-----------------
  //mettre le materiel et envoyer au serveur
- 
- this.materials.forEach((i,v)=>{
+
+
+
+   /*
+  this.materials.forEach((i,v)=>{
   i.ressource=this.urls[v].url;
   i.type=this.urls[v].type;
   
   
-      });
+      });*/
       //création de materiels
-      this.materials.forEach((i,v)=>{this.materialservice.updateMateriel(i).subscribe()});
 
 
 //------------
@@ -103,6 +110,7 @@ this.arrets.forEach((a)=>{
 //this.defiedit.id=this.defiId;
 //mise à jour de date de modification
 this.defiedit.datedemodification=new Date();
+this.defiedit.duree=this.defiedit.duree+"mn";
 
                           this.defiedit.points=pointTotal;
     this.defiservice.updateDefi(this.defiedit).subscribe();
@@ -111,10 +119,20 @@ this.defiedit.datedemodification=new Date();
 
 
 
-    console.log("fin de la méthode");
+    console.log("fin de la méthode modif",this.defiedit);
 
 
      //implementer la méthode Setstep() pour sortir de la vu
+      
+/*for (let i = 0; i < this.materials.length; i++) {
+  this.materials[i].ressource=this.urls[i].url;
+  this.materials[i].type=this.urls[i].type;
+
+}*/
+this.materials.forEach((i,v)=>{this.materialservice.updateMateriel(i).subscribe()});
+
+
+     alert("le defi a bien été modifié");
 
   }
 
@@ -130,6 +148,8 @@ this.Page.emit(page);
 
   choisirFichier(event: any,c:number) {
 
+
+
     this.verifieMateriel=event.target.files[0].type.substring(0,5)
     if(this.verifieMateriel=="video"){
       this.verifieMateriel="vidéo";
@@ -137,8 +157,9 @@ this.Page.emit(page);
     console.log(this.verifieMateriel);
     
   this.materialservice.choisirFichier(event).subscribe(x=> {this.urls[c]={url:x,type:this.verifieMateriel};
-  this.materials[c].ressource=x});
-  console.log("jj",this.urls);
+  this.materials[c].ressource=x;this.materials[c].type=this.verifieMateriel;});
+  
+  console.log("URLS",this.urls);
 
   }
 
@@ -157,6 +178,10 @@ alert("image uploaded");
   do(s:string){
     this.defiedit.arret=s;
     console.log("arret",s);
+    this.featuresarret.pipe(map( d =>{ d.filter( f => f.properties.LIBELLE == s );
+      d.forEach((x)=>{if(x.properties.LIBELLE==s){
+        this.defiedit.codearret=x.properties.CODE;
+      }})} )).subscribe(w=>console.log("code",w));
   }
 
   trackByIndexM(index: number, material: Materiel): number {
