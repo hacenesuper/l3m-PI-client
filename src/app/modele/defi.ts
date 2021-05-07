@@ -6,7 +6,7 @@ export interface Defi  {
     description:string
 
     type: string
-
+  distantiel?:string
     arret: string
     codearret: string
     auteur: string
