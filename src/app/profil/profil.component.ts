@@ -16,12 +16,13 @@ export class ProfilComponent implements OnInit {
   constructor(public authenticationService: AutentificationService) {}
 
   ngOnInit() {
+    //this.login="aoua"
     this.authenticationService.getUser(this.login).subscribe((currentUser) => {
       this.user = currentUser;
     });
   }
   updateProfil() {
-    this.authenticationService.updateUser(this.user).subscribe((user) => {
+    this.authenticationService.updateUser(this.user,this.login).subscribe((user) => {
       console.log("updated successfully");
     });
   }

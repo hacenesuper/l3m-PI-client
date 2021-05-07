@@ -28,7 +28,11 @@ left: 760px;
 width: 450px;
 text-align: center;
 ">
-  <app-defi-detail-play *ngIf="authInfo.isLogged  && detail===true" [(defiId)]="iddefi" (Page)="setdetail($event)" (defiIdChange)="setidittodesplay($event)"
+  <app-defi-detail-play *ngIf="authInfo.isLogged  && detail===true" [(defiId)]="iddefi"
+  (Page)="setdetail($event)"
+  (defiIdChange)="setidittodesplay($event)"
+  (idvisite)="setivisitetodisplay($event)"
+  (iddefivisite)="setdoivisitetodisplay($event)"
 
   >
   </app-defi-detail-play>
@@ -41,3 +45,7 @@ text-align: center;
 <app-profil *ngIf="authInfo.isLogged && step === 5" [login]="authInfo.userName">
 </app-profil>
 <app-creationdefi  *ngIf="step === 4" (setStep)="setStep($event)" ></app-creationdefi>
+
+  <app-visites   *ngIf="step === 8" [iddefi]="iddefi"></app-visites>
+<app-dovisite   *ngIf="step === 9"  [iddefi]="iddefi" [visiteur]="authInfo.userName" [defi]="d" [questions]="questions" [indices]="indices"></app-dovisite>
+<app-myvisite *ngIf="step === 10" [login]="authInfo.userName"></app-myvisite>

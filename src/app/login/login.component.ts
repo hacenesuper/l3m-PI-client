@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
       // On contacte le serveur métier pour l'informer si un nouvel utilisateur existe :
       if (u !== null) {
         this.setLogin.emit({ isLogged:true, uid: u.uid, userName:u.displayName });
-        const reponseServeur = await this.authenticationService
+        const reponseServeur = this.authenticationService
           .checkAuthentification(u)
           .subscribe((response) => {
             console.log(response);

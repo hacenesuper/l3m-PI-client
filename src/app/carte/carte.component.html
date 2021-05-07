@@ -16,15 +16,21 @@
                     [display] = "true"
                     [opacity] = "1"
                     >
-        <yaga-icon [iconUrl]="iconMarker"></yaga-icon></yaga-marker>
+           <yaga-icon [iconUrl]="iconMarker"></yaga-icon></yaga-marker>
 
-        <yaga-marker *ngFor   = "let arret of defiarret"
-                       [lng] = "arret.geometry.coordinates[0]"
+
+
+
+        <yaga-marker *ngFor   = "let arret of defiarret ;index as i"
+                       [lng] = "arret.geometry.coordinates[0]+(i/9999)"
                     [lat] = "arret.geometry.coordinates[1]"
                     [display] = "true"
                     [opacity] = "1"
+                    [draggable]="true"
+
+
                     >
-        <yaga-icon [iconUrl]="icondefi"  [iconSize]="iconsize"></yaga-icon>
+        <yaga-icon [iconUrl]="icondefi"  ></yaga-icon>
 
           <yaga-popup >
             <div>

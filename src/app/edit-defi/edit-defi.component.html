@@ -43,17 +43,25 @@
 
                                   </div>
                               </div>
+                              <div class="form-group">
+                                <p>  distanciel</p>
+                                <div class="col-sm-10">
+                                    <input required [(ngModel)]="this.defiedit.distanciel" name="distanciel" class="form-control" id="inputContact8" type="text" >
+
+                                </div>
+                            </div>
 
 
 
-                              <div style="position: absolute;left: 50px;margin-top: -130px;">
-                                  <label for="pet-select">Arret de transport</label>
+                              <div>
+                                <label for="pet-select">Arret de transport</label>
 
 
-                                  <select [(ngModel)]="this.defiedit.arret " name="Arret">
+                                <select #v (change)="do(v.value)"   name="arret"  >
 
-                                      <option  *ngFor="let ar of this.arrets" [ngValue]="ar">{{ar.Arret}}</option>
-                                    </select>
+                                 <option  *ngFor="let f of this.featuresarret|async "[ngValue]="f.properties.LIBELLE">{{f.properties.LIBELLE}}</option>
+
+                                  </select>
                                 </div>
 
                               <div class="form-group">
@@ -98,6 +106,44 @@
                               </div>
 
 
+                              <div *ngFor="let m of this.materials ;let  c =index;trackBy:trackByIndexM ;"
+                              class="form-group">
+
+                              <div class="form-group">
+
+                                  <label class="col-sm-2 control-label"
+                                      for="inputContact8">Materiel{{c+1}}</label>
+
+                              </div>
+
+                              <div>
+                                  <label class="col-sm-2 control-label" for="inputContact8">Description</label>
+
+                                  <div class="col-sm-10">
+                                      <input [(ngModel)]="m.description" required name="{{'ca'+c}}"
+                                          class="form-control" type="text">
+                                          <img [src]="m.ressource">
+
+                                  </div>
+                              </div>
+
+                              <div>
+                                  <label for="">modifier le materiel</label>
+                                  <input name="inp" id="inp" #inp="ngModel" ngModel type="file" (change)="choisirFichier($event,c)" />
+
+                              </div>
+
+
+
+
+                          </div>
+
+
+
+
+
+
+
 
                               <div *ngFor="let q of this.questions ;let  j =index; " class="form-group">
 
@@ -129,6 +175,14 @@
                                               class="form-control" type="text">
                                       </div>
                                   </div>
+                                  <div>
+                                    <label class="col-sm-2 control-label" for="inputContact8">type reponse</label>
+
+                                    <div class="col-sm-10">
+                                        <input [(ngModel)]="q.type" required  name="{{'questiontype'+j}}"
+                                            class="form-control" type="text">
+                                    </div>
+                                </div>
 
 
                                   <div>

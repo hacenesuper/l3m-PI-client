@@ -1,3 +1,4 @@
+import { QuestionService } from './../service/question.service';
 import { DefisService } from './../service/Defis.service';
 import { ArretService } from './../service/arret.service';
 import { Defi } from './../modele/defi';
@@ -7,7 +8,10 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthInfo } from "../modele/AuthInfo";
 import { AutentificationService } from '../service/autentification.service';
 import { FeatureArret } from '../modele/Arret';
-
+import { IndiceService } from '../service/indice.service';
+import { VisiteService } from '../service/visite.service';
+import { Indice } from '../modele/Indice';
+import { Question } from '../modele/Question';
 @Component({
   selector: "app-home",
   templateUrl: './home.component.html',
@@ -19,6 +23,9 @@ export class HomeComponent implements OnInit {
   iddefi:string="";
   arret:FeatureArret[]=[]
   defi:Defi[]=[]
+  d!:Defi;
+  indices:Indice[]=[];
+  questions:Question[]=[];
   authInfo: AuthInfo = {
     isLogged: false,
     uid:"",
@@ -27,11 +34,14 @@ export class HomeComponent implements OnInit {
   };
 
 
+
   constructor(
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     public authenticationService: AutentificationService,
       public arretservice:ArretService,
-      public defiservice:DefisService
+      public defiservice:DefisService,private DefisService:DefisService, public indiceservice:IndiceService ,
+      public QuestionService:QuestionService,
+   public visiteservice:VisiteService
   ) {
     afAuth.user.subscribe( (u:any) => {
       console.log("L’utilisateur Firebasse est ", u);
@@ -71,6 +81,24 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  setvisiteToDisplay(){
+    this.DefisService.getDefiByIdDefi(this.iddefi).subscribe((d) => {
+      this.d = d;
+      console.log("ledefi"+this.d)
+
+    });
+    this.indiceservice.getIndicesByIdDefi(this.iddefi).subscribe((d) => {
+      this.indices = d;
+      console.log("les indices"+this.questions)
+    });
+    this.QuestionService.getQuestionsByIdDefi(this.iddefi).subscribe((d) => {
+      this.questions = d;
+      console.log("lesqeustion"+this.indices)
+    });
+
+
+
+  }
   logout(): void {
     this.afAuth.signOut();
 
@@ -79,6 +107,7 @@ export class HomeComponent implements OnInit {
 setiddefi(iddefi: string) {
   this.iddefi = iddefi;
   this.detail=true;
+  this.setvisiteToDisplay()
 
 }
 setdetail(b:boolean) {
@@ -89,7 +118,20 @@ setidittodesplay(b:string) {
   this.iddefi=b
   this.step=3;
 
+
   }
+  setivisitetodisplay(b:string) {
+    this.iddefi=b
+    this.step=8;
+
+    }
+
+    setdoivisitetodisplay(b:string) {
+      this.iddefi=b
+
+      this.step=9;
+
+      }
   ngOnInit() {
     this.setarretToDisplay();
     this.setdefisToDisplay();

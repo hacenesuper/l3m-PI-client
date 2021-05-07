@@ -8,7 +8,7 @@ import { Arret, FeatureArret, FeatureArretCollection } from '../modele/Arret';
   providedIn: 'root'
 })
 export class ArretService {
-private url="yyy";
+private url="http://localhost:5000/api/arrets/";
   constructor(private http: HttpClient) { }
   toutLesarret(): Observable<FeatureArret[]> {
     return this.http.get<FeatureArretCollection>('https://data.mobilites-m.fr/api/bbox/json?types=arret').pipe(

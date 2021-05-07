@@ -18,7 +18,9 @@ import { DefisComponent } from './defis/defis.component';
 import { ChamisComponent } from './chamis/chamis.component';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {MatGridListModule} from '@angular/material/grid-list';
 
+import {MatCardModule} from '@angular/material/card';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatListModule } from '@angular/material/list';
 import { VisitesComponent } from './visites/visites.component';
@@ -31,9 +33,16 @@ import { DefiDetailPlayComponent } from './defi-detail-play/defi-detail-play.com
 import { ProfilComponent } from './profil/profil.component';
 import { CreationdefiComponent } from './creation-defi/creationdefi.component';
 import { EditDefiComponent } from './edit-defi/edit-defi.component';
+import { DovisiteComponent } from './dovisite/dovisite.component';
+import { MyvisiteComponent } from './myvisite/myvisite.component';
+import {
+  AngularFireStorageModule, BUCKET,
+
+} from "@angular/fire/storage";
+;
 ;
 @NgModule({
-  declarations: [	
+  declarations: [
     AppComponent,
       DefisComponent,
       ChamisComponent,
@@ -45,7 +54,9 @@ import { EditDefiComponent } from './edit-defi/edit-defi.component';
       DefiDetailPlayComponent,
       ProfilComponent,
       CreationdefiComponent,
-      EditDefiComponent
+      EditDefiComponent,
+      DovisiteComponent,
+      MyvisiteComponent
    ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
@@ -54,6 +65,8 @@ import { EditDefiComponent } from './edit-defi/edit-defi.component';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatIconModule,
+ MatGridListModule,
+  MatCardModule,
     MatButtonModule,
     MatSidenavModule,
     MatInputModule,
@@ -65,6 +78,7 @@ import { EditDefiComponent } from './edit-defi/edit-defi.component';
     LayoutModule,
     FormsModule,
     MatListModule,
+    AngularFireStorageModule,
 
 
   ],

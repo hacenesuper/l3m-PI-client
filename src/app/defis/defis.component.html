@@ -1,14 +1,21 @@
 
 <label style="border-radius: 10%;">
-  <input>
+  <input #auteur placeholder="entrez un auteur">
 </label>
-<label>
-  <input>
-</label>
-<label>
-  <input>
-</label>
-<button> search</button>
+
+<button (click)="filter(auteur.value)">search</button>
+
+<div>
+  <label for="pet-select">Arret de transport</label>
+
+
+  <select #v (change)="do(v.value)"   name="arret"  >
+
+   <option  *ngFor="let ar of this.arrets|async "[ngValue]="ar.arret">{{ar.arret}}</option>
+
+    </select>
+  </div>
+  <button (click)="all()">all</button>
 <div style="max-height:200px;max-width: 50%; border: 2px solid blue; overflow: scroll;">
 <table >
   <thead>
@@ -21,11 +28,11 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let a of defis">
+    <tr *ngFor="let a of obs|async">
 
       <td>{{a.titre}}</td>
          <td> {{a.auteur}} </td>
-      <td>{{a.datedecreation}}</td>
+      <td>{{a.datedecreation|date}}</td>
 
       <td><button (click)="emite(a.id)"> play </button></td>
     </tr>

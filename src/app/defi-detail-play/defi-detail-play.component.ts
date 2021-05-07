@@ -1,6 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Observable } from 'rxjs';
+
 import { Defi } from '../modele/defi';
+import { Materiel } from '../modele/Materiel';
 import { DefisService } from '../service/Defis.service';
+import { MaterielService } from '../service/materiel.service';
 
 @Component({
   selector: 'app-defi-detail-play',
@@ -9,10 +13,14 @@ import { DefisService } from '../service/Defis.service';
 })
 export class DefiDetailPlayComponent implements OnInit {
 
+
   @Input()defiId: string ="D151";
  @Output() Page: EventEmitter<boolean> = new EventEmitter();
  @Output() defiIdChange: EventEmitter<string> = new EventEmitter();
+ @Output() idvisite: EventEmitter<string> = new EventEmitter();
+ @Output() iddefivisite: EventEmitter<string> = new EventEmitter();
  defi!:Defi;
+ materials!:Observable<Materiel[]>;
  /*public defi: Defis={
    id:"",
    titre :"",
@@ -29,7 +37,7 @@ export class DefiDetailPlayComponent implements OnInit {
    points :1,
    epilogue:"",
  commentaires:"",};*/
-   constructor(private defiserver:DefisService) { }
+   constructor(private defiserver:DefisService,private materialservice:MaterielService) { }
 
 
    ngOnInit(): void {
@@ -37,7 +45,8 @@ export class DefiDetailPlayComponent implements OnInit {
  this.defiserver.getDefiByIdDefi(this.defiId).subscribe((data=>{this.defi=data;console.log(this.defi)}
 
 
-   ))
+   ));
+   this.materials= this.materialservice.getMaterielByIdDefi(this.defiId);
 
    }
    ngOnChange(): void {
@@ -57,5 +66,13 @@ export class DefiDetailPlayComponent implements OnInit {
     this.defiIdChange.emit(id);
 
       }
+      setPage3(id:string){
+        this.idvisite.emit(id);
+
+          }
+          setPage4(id:string){
+            this.iddefivisite.emit(id);
+
+              }
 
 }

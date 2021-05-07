@@ -6,5 +6,5 @@ export interface Question {
   description: string;
   secrets: string
   points: number
-
+  type:string
 }

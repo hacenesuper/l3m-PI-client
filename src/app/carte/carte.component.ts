@@ -77,10 +77,10 @@ export class CarteComponent implements OnInit {
 
   getdefiarret(){
 
-    console.log("les defis",this.defis)
-    console.log("lesarret:",this.arrets)
-    for (let i= 0; i < this.defis.length; i++) {
-     for (let j= 0; j < this.arrets.length; j++) {
+   console.log("les defis",this.defis)
+    //console.log("lesarret:",this.arrets)
+    for (let i= 0; i<this.defis.length; i++) {
+     for (let j= 0; j< this.arrets.length; j++) {
 
        if(this.defis[i].arret==this.arrets[j].properties.LIBELLE)
        {
@@ -94,11 +94,14 @@ export class CarteComponent implements OnInit {
     console.log(id)
     this.setdefiID.emit(id);
   }
+  trackByid(i:number ,e:Featuredefis){
+    return e.defi.id;
 
+  }
   ngOnInit(): void {
 
     this.getdefiarret();
-
+    console.log(this.defiarret)
   }
 
 }

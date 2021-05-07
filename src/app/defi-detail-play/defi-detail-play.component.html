@@ -23,9 +23,28 @@
                 <p><b> Durée :</b> {{this.defi.duree}}</p>
 
 
+                <div *ngFor="let m of this.materials |async" class="mix col-sm-3  page4 margin30">
+                    <div *ngIf="m.type=='image'" class="item-img-wrap ">
+                        <img [src]="m.ressource" class="img-responsive" alt="defi material">
+                        <div class="item-img-overlay">
+                            <a href="#" class="show-image">
+                                <span></span>
+                            </a>
+                        </div>
+                    </div>
+                    <div *ngIf="m.type=='vidéo'" class="item-img-wrap ">
+                        <a [href]="m.ressource" target="_blank" style="color: seashell;" >Cliquez ici pour voir la vidéo sur Youtube</a>
+
+                    </div>
+
+
+
+                </div>
+
+
             </div><!-- / project-info-box -->
 
-               <div><button (click)="setPage2(this.defi.id)"> editer</button> <button> voire visite</button> <button> visiter </button></div>
+                <div><button (click)="setPage2(this.defi.id)"> editer</button> <button (click)="setPage3(this.defi.id)"> voire visite</button> <button (click)="setPage4(this.defi.id)"> visiter </button></div>
         </div><!-- / column -->
 
 

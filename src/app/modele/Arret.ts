@@ -1,6 +1,6 @@
 export interface Arret {
-  Arret : string
-  Codearret : string
+  arret : string
+  codearret : string
   streetmap :string
 
 }
@@ -15,11 +15,11 @@ export interface FeatureArret {
   geometry: Geometry;
   properties: {
     CODE: string;
-    LIBELLE: string; // "GRENOBLE Cité Jean Macé / MEYLAN Maupertuis"
-    COMMUNE: string; // "C1"
-    Arr_visible: number; // 1
+    LIBELLE: string;
+    COMMUNE: string;
+    Arr_visible: number;
     type: string;
-    id: string; // "SEM_C1"
+    id: string;
   };
 }
 export interface FeatureArretCollection {

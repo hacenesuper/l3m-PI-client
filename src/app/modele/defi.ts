@@ -3,11 +3,9 @@ export interface Defi  {
     titre?: string
     datedecreation?: Date
     datedemodification?: Date
-    description?:string
-
-    type?: string
-
-    arret: string
+    description:string
+ type?: string
+arret: string
     codearret?: string
     auteur?: string
     motscles ?: string
@@ -16,6 +14,7 @@ export interface Defi  {
     points?: number
     epilogue?:string
 commentaires?:string
+distanciel:string
 
 
 }
